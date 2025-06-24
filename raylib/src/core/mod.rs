@@ -86,6 +86,7 @@ pub struct RaylibBuilder {
     window_transparent: bool,
     msaa_4x_hint: bool,
     vsync_hint: bool,
+    window_high_dpi: bool,
     log_level: TraceLogLevel,
     width: i32,
     height: i32,
@@ -145,6 +146,12 @@ impl RaylibBuilder {
         self
     }
 
+    /// Tells the window to use high dpi mode
+    pub fn window_high_dpi(&mut self) -> &mut Self {
+        self.window_high_dpi = true;
+        self
+    }
+
     /// Sets the window's width.
     pub fn width(&mut self, w: i32) -> &mut Self {
         self.width = w;
@@ -195,6 +202,9 @@ impl RaylibBuilder {
         }
         if self.vsync_hint {
             flags |= FLAG_VSYNC_HINT as u32;
+        }
+        if self.window_high_dpi {
+            flags |= FLAG_WINDOW_HIGHDPI as u32;
         }
 
         unsafe {
